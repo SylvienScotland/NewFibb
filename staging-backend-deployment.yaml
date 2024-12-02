@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci-backend-staging
+  labels:
+    app: fibonacci-backend
+    environment: staging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci-backend
+      environment: staging
+  template:
+    metadata:
+      labels:
+        app: fibonacci-backend
+        environment: staging
+    spec:
+      containers:
+        - name: fibonacci-backend
+          image: sylvienscotland/newfibonacci-backend:v1
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENVIRONMENT
+              value: "staging"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fibonacci-backend-staging-service
+  labels:
+    app: fibonacci-backend
+    environment: staging
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: fibonacci-backend
+    environment: staging
