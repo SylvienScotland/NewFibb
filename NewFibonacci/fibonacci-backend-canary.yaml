@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fibonacci-backend-canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fibonacci-backend
+      version: canary
+  template:
+    metadata:
+      labels:
+        app: fibonacci-backend
+        version: canary
+    spec:
+      containers:
+        - name: fibonacci-backend
+          image: sylvienscotland/newfibonacci-backend:v2
+          ports:
+            - containerPort: 8080
