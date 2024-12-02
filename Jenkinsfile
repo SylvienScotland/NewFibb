@@ -16,8 +16,8 @@ pipeline {
         stage('Staging Deployment') {
             steps {
                 echo 'Deploying to staging...'
-                bat 'kubectl apply -f staging-backend-deployment.yaml'
-                bat 'kubectl apply -f staging-frontend-deployment.yaml'
+                bat 'kubectl apply -f staging-backend-deployment.yaml --validate=false'
+                bat 'kubectl apply -f staging-backend-deployment.yaml --validate=false'
             }
         }
         stage('Load Testing') {
